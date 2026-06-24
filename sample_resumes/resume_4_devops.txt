@@ -1,0 +1,40 @@
+EMILY RODRIGUEZ
+emily.rodriguez@email.com | (555) 234-5678 | Denver, CO
+
+PROFILE
+DevOps Engineer with 6 years of experience in cloud infrastructure, 
+automation, and CI/CD. Expert in AWS, Kubernetes, and Infrastructure as Code. 
+Proven ability to reduce deployment time by 70% and improve system reliability.
+
+CORE COMPETENCIES
+• Cloud Platforms: AWS, Azure, GCP
+• Containerization: Docker, Kubernetes, Helm, Istio
+• IaC: Terraform, Ansible, CloudFormation
+• CI/CD: Jenkins, GitLab CI, GitHub Actions, CircleCI
+• Monitoring: Prometheus, Grafana, ELK Stack, Datadog
+• Scripting: Python, Bash, PowerShell, Go
+• Security: Vault, AWS IAM, Network Security
+
+EXPERIENCE
+Senior DevOps Engineer | ScaleUp Technologies | 2020 - Present
+• Architected and managed Kubernetes clusters serving 50+ microservices
+• Implemented GitOps workflow using ArgoCD and Flux
+• Built automated disaster recovery systems with RTO < 15 minutes
+• Reduced cloud costs by 40% through resource optimization
+• Led security compliance initiatives (SOC2, HIPAA)
+
+DevOps Engineer | CloudFirst Corp | 2018 - 2020
+• Migrated monolithic application to microservices architecture
+• Built CI/CD pipelines reducing deployment time from days to minutes
+• Implemented infrastructure monitoring and alerting
+• Automated server provisioning using Terraform and Ansible
+
+System Administrator | TechStart Inc | 2016 - 2018
+• Managed Linux servers and network infrastructure
+• Implemented backup and disaster recovery procedures
+• Provided technical support and troubleshooting
+
+EDUCATION
+Bachelor of Science in Information Technology | Colorado State University | 2016
+AWS Certified Solutions Architect - Professional
+Kubernetes Administrator (CKA) Certified

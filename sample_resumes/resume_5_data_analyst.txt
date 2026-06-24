@@ -1,0 +1,39 @@
+DAVID PARK
+david.park@email.com | (555) 876-5432 | Chicago, IL
+
+SUMMARY
+Data Analyst with 3 years of experience transforming complex data into 
+actionable business insights. Skilled in SQL, Python, Excel, and data 
+visualization. Strong background in statistical analysis and reporting.
+
+SKILLS
+• Analytics: SQL, Python (Pandas, NumPy), Excel (VLOOKUP, Pivot Tables)
+• Visualization: Tableau, Power BI, Matplotlib, Seaborn
+• Statistics: Hypothesis Testing, Regression, A/B Testing
+• Databases: MySQL, PostgreSQL, Snowflake, BigQuery
+• Tools: Jupyter, Git, Google Analytics, Salesforce
+• Soft Skills: Communication, Attention to Detail, Critical Thinking
+
+EXPERIENCE
+Data Analyst | RetailCorp | 2022 - Present
+• Analyzed sales data to identify trends and optimize inventory management
+• Created Tableau dashboards for executive reporting
+• Performed A/B testing for marketing campaigns improving ROI by 30%
+• Built automated reporting pipelines using Python and SQL
+• Collaborated with marketing team on customer segmentation analysis
+
+Junior Data Analyst | FinanceHub | 2021 - 2022
+• Maintained and optimized SQL queries for reporting
+• Created Excel reports and PowerPoint presentations for stakeholders
+• Assisted in data cleaning and validation processes
+• Supported senior analysts in statistical modeling projects
+
+EDUCATION
+Bachelor of Science in Economics | University of Chicago | 2021
+• Minor in Statistics
+• Relevant Coursework: Econometrics, Data Analysis, Financial Modeling
+
+CERTIFICATIONS
+• Tableau Desktop Specialist
+• Google Data Analytics Certificate
+• Microsoft Excel Expert

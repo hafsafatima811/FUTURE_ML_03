@@ -1,0 +1,43 @@
+MICHAEL CHEN
+michael.chen@email.com | (555) 456-7890 | Austin, TX
+Portfolio: michaelchen.dev
+
+OBJECTIVE
+Recent Computer Science graduate seeking a Software Engineer position. 
+Strong foundation in Python, JavaScript, and web development. Eager to 
+contribute to innovative projects and grow as a developer.
+
+SKILLS
+• Languages: Python, JavaScript, HTML, CSS, Java
+• Frontend: React, Vue.js, Bootstrap, Tailwind CSS
+• Backend: Node.js, Express.js, Flask, Django
+• Databases: MySQL, PostgreSQL, MongoDB
+• Tools: Git, GitHub, VS Code, Postman, Figma
+• Other: REST APIs, JSON, Agile, Scrum
+
+PROJECTS
+E-Commerce Platform (React + Node.js)
+• Built full-stack e-commerce website with user authentication
+• Implemented shopping cart, payment integration, and admin dashboard
+• Used MongoDB for database and deployed on Heroku
+
+Machine Learning Image Classifier
+• Developed CNN model using TensorFlow for image classification
+• Achieved 89% accuracy on CIFAR-10 dataset
+• Created web interface using Flask for model inference
+
+Chat Application
+• Built real-time chat app using Socket.io and Express.js
+• Implemented user authentication with JWT tokens
+• Deployed on AWS EC2 with Nginx
+
+EDUCATION
+Bachelor of Science in Computer Science | University of Texas at Austin | 2024
+• Relevant Courses: Data Structures, Algorithms, Database Systems, Web Development
+• GPA: 3.7/4.0
+
+INTERNSHIPS
+Software Engineering Intern | StartupXYZ | Summer 2023
+• Developed frontend components using React and TypeScript
+• Fixed 20+ bugs and improved application performance
+• Participated in daily stand-ups and sprint planning

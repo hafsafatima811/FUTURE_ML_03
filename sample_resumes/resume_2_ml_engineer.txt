@@ -1,0 +1,40 @@
+SARAH JOHNSON
+sarah.johnson@email.com | (555) 987-6543 | Seattle, WA
+GitHub: github.com/sarahj
+
+PROFESSIONAL SUMMARY
+Machine Learning Engineer with 5 years of experience designing and deploying 
+ML systems at scale. Expert in MLOps, model optimization, and cloud infrastructure. 
+Passionate about building robust AI pipelines and automated model training.
+
+TECHNICAL SKILLS
+• Languages: Python, Java, Go, SQL
+• ML Frameworks: TensorFlow, PyTorch, Scikit-learn, XGBoost, LightGBM
+• MLOps: Docker, Kubernetes, Jenkins, GitHub Actions, MLflow
+• Cloud: AWS (SageMaker, Lambda, EC2), GCP, Azure
+• Databases: PostgreSQL, MongoDB, Redis, Elasticsearch
+• Tools: Git, Jupyter, VS Code, Linux, Bash
+
+PROFESSIONAL EXPERIENCE
+ML Engineer | CloudAI Solutions | 2021 - Present
+• Designed and deployed 15+ ML models in production serving 10M+ users
+• Built CI/CD pipelines for automated model training and deployment
+• Implemented model monitoring and drift detection systems
+• Optimized inference latency by 60% using TensorRT and ONNX
+• Led migration of ML infrastructure to Kubernetes clusters
+
+Software Engineer - ML | InnovateTech | 2019 - 2021
+• Developed recommendation algorithms for e-commerce platform
+• Built real-time feature engineering pipelines using Kafka and Spark
+• Implemented A/B testing framework for model evaluation
+• Mentored junior engineers on ML best practices
+
+EDUCATION
+Bachelor of Technology in Computer Science | IIT Bombay | 2019
+• GPA: 3.9/4.0
+• Relevant Coursework: Machine Learning, Deep Learning, Distributed Systems
+
+CERTIFICATIONS
+• AWS Certified Machine Learning - Specialty
+• Google Cloud Professional Data Engineer
+• TensorFlow Developer Certificate
