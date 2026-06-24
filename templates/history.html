@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History | AI Resume Screening System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --dark: #1e293b; --gray: #64748b; --light: #f8fafc; --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1); --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --radius: 12px; --radius-lg: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; color: var(--dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px; border-radius: var(--radius-lg); color: white; margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .page-header h1 { font-size: 1.8rem; font-weight: 800; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border: none; border-radius: 8px;
+            font-family: inherit; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+        .btn-light { background: white; color: var(--primary); }
+        .btn-outline { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+        .card {
+            background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow); margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .history-table {
+            width: 100%; border-collapse: collapse;
+        }
+        .history-table th {
+            text-align: left; padding: 12px 16px; background: #f8fafc;
+            font-weight: 600; font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--gray);
+        }
+        .history-table td {
+            padding: 16px; border-bottom: 1px solid #f1f5f9;
+        }
+        .history-table tr:hover { background: #f8fafc; }
+
+        .action-btn {
+            padding: 6px 12px; border-radius: 6px; font-size: 0.8rem;
+            font-weight: 600; cursor: pointer; border: none; margin-right: 6px;
+        }
+        .btn-view { background: #e0e7ff; color: var(--primary); }
+        .btn-export { background: #d1fae5; color: var(--success); }
+        .btn-delete { background: #fee2e2; color: var(--danger); }
+
+        .empty-state { text-align: center; padding: 60px 20px; }
+        .empty-state i { font-size: 4rem; color: #cbd5e1; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-history"></i> Analysis History</h1>
+                <p>View all your past resume screening analyses</p>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <a href="/" class="btn btn-outline"><i class="fas fa-plus"></i> New Analysis</a>
+                <a href="/" class="btn btn-light"><i class="fas fa-home"></i> Dashboard</a>
+            </div>
+        </div>
+
+        <div id="historyContent">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-list"></i> All Analyses</div>
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <h3>Loading...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', loadHistory);
+
+        async function loadHistory() {
+            try {
+                const response = await fetch('/api/results');
+                const results = await response.json();
+
+                const container = document.getElementById('historyContent');
+
+                if (results.length === 0) {
+                    container.innerHTML = `
+                        <div class="card">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h3>No analyses yet</h3>
+                                <p>Upload resumes to see your analysis history here.</p>
+                                <a href="/" class="btn btn-light" style="margin-top:16px;">
+                                    <i class="fas fa-arrow-left"></i> Start New Analysis
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = `
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-list"></i> All Analyses (${results.length})</div>
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Candidates</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                results.forEach(r => {
+                    const date = new Date(r.timestamp).toLocaleString();
+                    html += `
+                        <tr>
+                            <td><strong>${date}</strong><br><span style="color:var(--gray);font-size:0.85rem;">ID: ${r.result_id}</span></td>
+                            <td><span style="font-size:1.2rem;font-weight:700;color:var(--primary);">${r.total_candidates}</span> resumes</td>
+                            <td>
+                                <button class="action-btn btn-view" onclick="viewResult('${r.result_id}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn btn-export" onclick="exportResult('${r.result_id}')">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                                <button class="action-btn btn-delete" onclick="deleteResult('${r.result_id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+
+            } catch (e) {
+                document.getElementById('historyContent').innerHTML = `
+                    <div class="card">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Error loading history</h3>
+                            <p>Please make sure the server is running.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function viewResult(id) {
+            window.location.href = `/results?id=${id}`;
+        }
+
+        function exportResult(id) {
+            window.location.href = `/api/export/${id}`;
+        }
+
+        async function deleteResult(id) {
+            if (!confirm('Are you sure you want to delete this analysis?')) return;
+
+            try {
+                const response = await fetch(`/api/results/${id}`, { method: 'DELETE' });
+                if (response.ok) {
+                    loadHistory();
+                }
+            } catch (e) {
+                alert('Failed to delete');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Gap Analysis | Resume Screening</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --dark: #1e293b; --gray: #64748b; --light: #f8fafc; --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1); --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --radius: 12px; --radius-lg: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; color: var(--dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px; border-radius: var(--radius-lg); color: white; margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .page-header h1 { font-size: 1.8rem; font-weight: 800; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border: none; border-radius: 8px;
+            font-family: inherit; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+        .btn-light { background: white; color: var(--primary); }
+        .btn-outline { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+        .card {
+            background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow); margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .card-title i { color: var(--primary); }
+
+        .gap-flow {
+            display: flex; align-items: center; justify-content: center;
+            gap: 20px; margin: 30px 0; flex-wrap: wrap;
+        }
+        .flow-box {
+            background: white; padding: 20px; border-radius: 12px;
+            text-align: center; border: 2px solid #e2e8f0;
+            min-width: 200px;
+        }
+        .flow-box i { font-size: 2rem; margin-bottom: 8px; color: var(--primary); }
+        .flow-box h4 { font-weight: 600; }
+        .flow-arrow { font-size: 2rem; color: var(--primary); }
+
+        .example-gap {
+            background: #fef2f2; border-left: 4px solid var(--danger);
+            padding: 16px; border-radius: 8px; margin-bottom: 12px;
+        }
+        .example-gap h4 { color: var(--danger); margin-bottom: 4px; }
+        .example-gap p { color: var(--gray); font-size: 0.9rem; }
+
+        .example-strength {
+            background: #f0fdf4; border-left: 4px solid var(--success);
+            padding: 16px; border-radius: 8px; margin-bottom: 12px;
+        }
+        .example-strength h4 { color: var(--success); margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-graduation-cap"></i> Skill Gap Analysis</h1>
+                <p>Identify missing skills and improvement areas for candidates</p>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <a href="/" class="btn btn-outline"><i class="fas fa-home"></i> Dashboard</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-sitemap"></i> How It Works</div>
+
+            <div class="gap-flow">
+                <div class="flow-box">
+                    <i class="fas fa-briefcase"></i>
+                    <h4>Job Requirements</h4>
+                    <p style="color:var(--gray);font-size:0.85rem;">Skills from job description</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-box">
+                    <i class="fas fa-file-alt"></i>
+                    <h4>Resume Skills</h4>
+                    <p style="color:var(--gray);font-size:0.85rem;">Skills extracted from resume</p>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-box">
+                    <i class="fas fa-not-equal"></i>
+                    <h4>Gap Analysis</h4>
+                    <p style="color:var(--gray);font-size:0.85rem;">Missing skills identified</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-search"></i> What We Identify</div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                    <h4 style="margin-bottom:12px;color:var(--danger)"><i class="fas fa-times-circle"></i> Skill Gaps</h4>
+
+                    <div class="example-gap">
+                        <h4>Missing: TensorFlow</h4>
+                        <p>Job requires TensorFlow but candidate only lists PyTorch. Suggestion: Take TensorFlow certification course.</p>
+                    </div>
+
+                    <div class="example-gap">
+                        <h4>Missing: AWS</h4>
+                        <p>Cloud experience required but not found. Suggestion: Complete AWS Cloud Practitioner certification.</p>
+                    </div>
+
+                    <div class="example-gap">
+                        <h4>Missing: Docker</h4>
+                        <p>Containerization skill gap detected. Suggestion: Learn Docker fundamentals and container orchestration.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="margin-bottom:12px;color:var(--success)"><i class="fas fa-check-circle"></i> Strengths</h4>
+
+                    <div class="example-strength">
+                        <h4>Strong: Python</h4>
+                        <p>Candidate has extensive Python experience with 15+ mentions across projects and work history.</p>
+                    </div>
+
+                    <div class="example-strength">
+                        <h4>Strong: Machine Learning</h4>
+                        <p>Multiple ML frameworks listed with production deployment experience.</p>
+                    </div>
+
+                    <div class="example-strength">
+                        <h4>Strong: 5+ Years Experience</h4>
+                        <p>Exceeds minimum requirement of 3 years for this role.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-lightbulb"></i> Try It Now</div>
+            <p style="margin-bottom:16px;">Upload resumes to see real skill gap analysis for each candidate!</p>
+            <a href="/" class="btn btn-light" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;">
+                <i class="fas fa-arrow-right"></i> Go to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html>

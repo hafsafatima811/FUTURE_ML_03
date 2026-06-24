@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Screening System | Future Interns ML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--white);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 30px -5px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .card-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .upload-area {
+            border: 3px dashed #cbd5e1;
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: #f8fafc;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .upload-area p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .upload-area input {
+            display: none;
+        }
+
+        .file-list {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .file-item i { color: var(--primary); }
+        .file-item .remove-btn {
+            color: var(--danger);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea,
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus,
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+
+        .form-group textarea {
+            min-height: 180px;
+        }
+
+        .template-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .template-chip {
+            padding: 6px 14px;
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-chip:hover {
+            background: #e0e7ff;
+            border-color: var(--primary);
+        }
+
+        .template-chip.active {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.5);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card i {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+        }
+
+        .loading-overlay.active { display: flex; }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid { grid-template-columns: 1fr; }
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: var(--radius);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .feature-item i {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .feature-item .feature-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .feature-item .feature-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 24px;
+            background: var(--dark);
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <h3>Analyzing Resumes...</h3>
+        <p id="loadingText">Parsing documents and extracting skills</p>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="app-container">
+        <header class="header">
+            <h1><i class="fas fa-robot"></i> AI Resume Screening System</h1>
+            <p>Intelligent candidate ranking, skill matching, and resume quality analysis powered by Machine Learning</p>
+            <div class="badge">Future Interns ML Task 3</div>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <i class="fas fa-file-alt" style="color: var(--primary);"></i>
+                <div class="stat-value" id="statResumes">0</div>
+                <div class="stat-label">Resumes Processed</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bullseye" style="color: var(--success);"></i>
+                <div class="stat-value" id="statMatches">0</div>
+                <div class="stat-label">Best Matches</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bolt" style="color: var(--warning);"></i>
+                <div class="stat-value" id="statSkills">0</div>
+                <div class="stat-label">Skills Detected</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock" style="color: var(--info);"></i>
+                <div class="stat-value" id="statTime">0s</div>
+                <div class="stat-label">Avg. Processing</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h2>Upload Resumes</h2>
+                </div>
+
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drag & Drop Resumes Here</h3>
+                    <p>or click to browse (PDF, DOCX, TXT, RTF)</p>
+                    <p style="margin-top:8px; font-size:0.8rem; color:#94a3b8;">Max 10MB per file - Batch upload supported</p>
+                    <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt,.rtf">
+                </div>
+
+                <div class="file-list" id="fileList"></div>
+
+                <div style="margin-top:20px;">
+                    <button class="btn btn-secondary btn-block" onclick="clearFiles()">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-briefcase"></i>
+                    <h2>Job Description</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Quick Templates</label>
+                    <div class="template-selector" id="templateSelector">
+                        <span class="template-chip active" data-id="0">Custom</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobDescription">Job Description *</label>
+                    <textarea id="jobDescription" placeholder="Paste the job description here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobSkills">Required Skills (comma-separated)</label>
+                    <input type="text" id="jobSkills" placeholder="e.g., Python, Machine Learning, SQL, AWS">
+                </div>
+
+                <button class="btn btn-primary btn-block" onclick="analyzeResumes()">
+                    <i class="fas fa-magic"></i> Analyze Resumes
+                </button>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <a href="/history" class="feature-item">
+                <i class="fas fa-history"></i>
+                <span class="feature-title">View Past Analyses</span>
+                <span class="feature-desc">See all previous screening results</span>
+            </a>
+            <a href="/compare" class="feature-item">
+                <i class="fas fa-balance-scale"></i>
+                <span class="feature-title">Candidate Comparison</span>
+                <span class="feature-desc">Side-by-side candidate comparison</span>
+            </a>
+            <a href="/semantic-match" class="feature-item">
+                <i class="fas fa-brain"></i>
+                <span class="feature-title">AI Semantic Matching</span>
+                <span class="feature-desc">Deep text similarity analysis</span>
+            </a>
+            <a href="/visuals" class="feature-item">
+                <i class="fas fa-chart-pie"></i>
+                <span class="feature-title">Visual Analytics</span>
+                <span class="feature-desc">Charts, graphs & word clouds</span>
+            </a>
+            <a href="/ats-check" class="feature-item">
+                <i class="fas fa-shield-alt"></i>
+                <span class="feature-title">ATS Compatibility</span>
+                <span class="feature-desc">Check resume ATS score</span>
+            </a>
+            <a href="/skill-gaps" class="feature-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="feature-title">Skill Gap Analysis</span>
+                <span class="feature-desc">Find missing skills per candidate</span>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>Built for Future Interns ML Internship | FUTURE_ML_03</p>
+        </footer>
+    </div>
+
+    <script>
+        let uploadedFiles = [];
+        let templates = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/job-templates');
+                templates = await response.json();
+
+                const selector = document.getElementById('templateSelector');
+                templates.forEach(t => {
+                    const chip = document.createElement('span');
+                    chip.className = 'template-chip';
+                    chip.textContent = t.title;
+                    chip.dataset.id = t.id;
+                    chip.onclick = () => selectTemplate(t.id);
+                    selector.appendChild(chip);
+                });
+            } catch (e) {
+                console.error('Failed to load templates:', e);
+            }
+
+            // Load stats from latest result
+            loadStats();
+        });
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/results');
+                const results = await response.json();
+                if (results.length > 0) {
+                    const latest = results[0];
+                    document.getElementById('statResumes').textContent = latest.total_candidates || 0;
+                    // Try to get more details from the actual result
+                    const detailResponse = await fetch(`/api/results/${latest.result_id}`);
+                    if (detailResponse.ok) {
+                        const detail = await detailResponse.json();
+                        const candidates = detail.candidates || [];
+                        const bestMatches = candidates.filter(c => (c.match_result?.total_score || 0) >= 70).length;
+                        const totalSkills = candidates.reduce((sum, c) => sum + (c.skills?.skill_count || 0), 0);
+                        document.getElementById('statMatches').textContent = bestMatches;
+                        document.getElementById('statSkills').textContent = totalSkills;
+                    }
+                }
+            } catch (e) {
+                console.log('No previous stats');
+            }
+        }
+
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast(`File ${file.name} exceeds 10MB limit`, 'error');
+                    return;
+                }
+                uploadedFiles.push(file);
+            });
+            updateFileList();
+        }
+
+        function updateFileList() {
+            fileList.innerHTML = uploadedFiles.map((file, idx) => `
+                <div class="file-item">
+                    <span><i class="fas fa-file"></i> ${file.name} (${(file.size/1024).toFixed(1)} KB)</span>
+                    <i class="fas fa-times remove-btn" onclick="removeFile(${idx})"></i>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(idx) {
+            uploadedFiles.splice(idx, 1);
+            updateFileList();
+        }
+
+        function clearFiles() {
+            uploadedFiles = [];
+            updateFileList();
+            fileInput.value = '';
+        }
+
+        function selectTemplate(id) {
+            document.querySelectorAll('.template-chip').forEach(c => c.classList.remove('active'));
+            document.querySelector(`[data-id="${id}"]`).classList.add('active');
+
+            if (id === 0) {
+                document.getElementById('jobDescription').value = '';
+                document.getElementById('jobSkills').value = '';
+                return;
+            }
+
+            const template = templates.find(t => t.id === id);
+            if (template) {
+                document.getElementById('jobDescription').value = template.description;
+                document.getElementById('jobSkills').value = template.skills;
+            }
+        }
+
+        async function analyzeResumes() {
+            if (uploadedFiles.length === 0) {
+                showToast('Please upload at least one resume', 'error');
+                return;
+            }
+
+            const jobDesc = document.getElementById('jobDescription').value.trim();
+            if (!jobDesc) {
+                showToast('Please enter a job description', 'error');
+                return;
+            }
+
+            const loading = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            loading.classList.add('active');
+
+            const formData = new FormData();
+            uploadedFiles.forEach(file => formData.append('resumes', file));
+            formData.append('job_description', jobDesc);
+            formData.append('job_skills', document.getElementById('jobSkills').value);
+
+            try {
+                loadingText.textContent = 'Parsing documents and extracting skills...';
+                const startTime = Date.now();
+
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+
+                if (data.success) {
+                    document.getElementById('statResumes').textContent = data.total_processed;
+                    const bestMatches = data.candidates.filter(c => c.match_result.total_score >= 70).length;
+                    document.getElementById('statMatches').textContent = bestMatches;
+                    const totalSkills = data.candidates.reduce((sum, c) => sum + c.skills.skill_count, 0);
+                    document.getElementById('statSkills').textContent = totalSkills;
+                    document.getElementById('statTime').textContent = elapsed + 's';
+
+                    showToast(`Analysis complete! ${data.total_processed} resume(s) processed`, 'success');
+
+                    setTimeout(() => {
+                        window.location.href = `/results?id=${data.result_id}`;
+                    }, 1500);
+                } else {
+                    showToast(data.error || 'Analysis failed', 'error');
+                }
+            } catch (error) {
+                showToast('Network error: ' + error.message, 'error');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#1e293b';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>

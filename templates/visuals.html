@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Analytics | Resume Screening</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --dark: #1e293b; --gray: #64748b; --light: #f8fafc; --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1); --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --radius: 12px; --radius-lg: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; color: var(--dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px; border-radius: var(--radius-lg); color: white; margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .page-header h1 { font-size: 1.8rem; font-weight: 800; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border: none; border-radius: 8px;
+            font-family: inherit; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+        .btn-light { background: white; color: var(--primary); }
+        .btn-outline { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+        .card {
+            background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+            box-shadow: var(--shadow); margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .card-title i { color: var(--primary); }
+
+        .chart-type {
+            display: flex; align-items: flex-start; gap: 16px;
+            padding: 20px; background: #f8fafc; border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        .chart-type i {
+            font-size: 2rem; color: var(--primary); width: 50px;
+            text-align: center; flex-shrink: 0;
+        }
+        .chart-type h4 { font-weight: 600; margin-bottom: 6px; }
+        .chart-type p { color: var(--gray); font-size: 0.9rem; }
+
+        .placeholder-img {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            height: 200px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary); font-weight: 600;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-chart-pie"></i> Visual Analytics</h1>
+                <p>Charts and visualizations generated for each analysis</p>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <a href="/" class="btn btn-outline"><i class="fas fa-home"></i> Dashboard</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-images"></i> Available Visualizations</div>
+
+            <div class="chart-type">
+                <i class="fas fa-bullseye"></i>
+                <div>
+                    <h4>Radar Chart - Match Score Breakdown</h4>
+                    <p>Shows 5 dimensions: Skills Match, Experience Match, Education Match, Semantic Similarity, and Resume Quality. Each axis represents a scoring component.</p>
+                    <div class="placeholder-img"><i class="fas fa-chart-radar" style="font-size:3rem;"></i></div>
+                </div>
+            </div>
+
+            <div class="chart-type">
+                <i class="fas fa-cloud"></i>
+                <div>
+                    <h4>Word Cloud - Resume Keywords</h4>
+                    <p>Visual representation of the most frequent words in a resume. Larger words appear more often, highlighting key skills and experience areas.</p>
+                    <div class="placeholder-img"><i class="fas fa-cloud" style="font-size:3rem;"></i></div>
+                </div>
+            </div>
+
+            <div class="chart-type">
+                <i class="fas fa-tachometer-alt"></i>
+                <div>
+                    <h4>Quality Gauge - Resume Score</h4>
+                    <p>Speedometer-style gauge showing overall resume quality score (0-100). Green zone = excellent, Yellow = good, Red = needs improvement.</p>
+                    <div class="placeholder-img"><i class="fas fa-tachometer-alt" style="font-size:3rem;"></i></div>
+                </div>
+            </div>
+
+            <div class="chart-type">
+                <i class="fas fa-chart-bar"></i>
+                <div>
+                    <h4>Ranking Bar Chart - All Candidates</h4>
+                    <p>Horizontal bar chart comparing all candidates by total match score. Color-coded: Green (excellent >=70%), Yellow (good 50-69%), Red (<50%).</p>
+                    <div class="placeholder-img"><i class="fas fa-chart-bar" style="font-size:3rem;"></i></div>
+                </div>
+            </div>
+
+            <div class="chart-type">
+                <i class="fas fa-project-diagram"></i>
+                <div>
+                    <h4>Skills Comparison Chart</h4>
+                    <p>Side-by-side comparison showing matched skills (green) vs missing skills (red) for each candidate against job requirements.</p>
+                    <div class="placeholder-img"><i class="fas fa-project-diagram" style="font-size:3rem;"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-lightbulb"></i> See Real Charts</div>
+            <p style="margin-bottom:16px;">Upload resumes and analyze to see actual interactive charts!</p>
+            <a href="/" class="btn btn-light" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;">
+                <i class="fas fa-arrow-right"></i> Go to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html>

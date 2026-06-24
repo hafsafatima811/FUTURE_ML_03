@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | AI Resume Screening System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            color: white;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h1 { font-size: 1.8rem; font-weight: 800; }
+        .page-header p { opacity: 0.9; margin-top: 5px; }
+
+        .header-actions { display: flex; gap: 12px; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border: none; border-radius: 8px;
+            font-family: inherit; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+
+        .btn-light { background: white; color: var(--primary); }
+        .btn-light:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-outline { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); }
+        .btn-outline:hover { background: rgba(255,255,255,0.3); }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i { color: var(--primary); }
+
+        /* Ranking Table */
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ranking-table th {
+            text-align: left;
+            padding: 12px 16px;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray);
+        }
+
+        .ranking-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .ranking-table tr:hover { background: #f8fafc; }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; }
+        .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: white; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: white; }
+        .rank-other { background: #e2e8f0; color: var(--gray); }
+
+        .score-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .score-excellent { background: #d1fae5; color: #065f46; }
+        .score-good { background: #fef3c7; color: #92400e; }
+        .score-average { background: #fee2e2; color: #991b1b; }
+
+        .candidate-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .candidate-meta {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        .action-btns { display: flex; gap: 8px; }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .action-btn-view { background: #e0e7ff; color: var(--primary); }
+        .action-btn-view:hover { background: #c7d2fe; }
+
+        /* Detail Panel */
+        .detail-panel {
+            display: none;
+            background: #f8fafc;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .detail-panel.active { display: block; }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .detail-grid { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        .detail-section h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            padding: 4px 10px;
+            background: #e0e7ff;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .skill-tag.missing {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-excellent { background: linear-gradient(90deg, #10b981, #34d399); }
+        .progress-good { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .progress-average { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .metric-label { font-size: 0.9rem; color: var(--gray); }
+        .metric-value { font-weight: 700; font-size: 0.95rem; }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Suggestions */
+        .suggestion-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .suggestion-icon {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .priority-high { background: #fee2e2; color: var(--danger); }
+        .priority-medium { background: #fef3c7; color: var(--warning); }
+        .priority-low { background: #d1fae5; color: var(--success); }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-chart-bar"></i> Screening Results</h1>
+                <p id="resultsSummary">Analysis complete. View candidate rankings and detailed insights below.</p>
+            </div>
+            <div class="header-actions">
+                <a href="/history" class="btn btn-outline"><i class="fas fa-history"></i> History</a>
+                <a href="/" class="btn btn-outline"><i class="fas fa-arrow-left"></i> New Analysis</a>
+                <button class="btn btn-light" onclick="exportResults()"><i class="fas fa-download"></i> Export</button>
+            </div>
+        </div>
+
+        <!-- Results Content -->
+        <div id="resultsContent">
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <h3>No results to display</h3>
+                <p>Go back and upload resumes to see analysis results.</p>
+                <a href="/" class="btn btn-light" style="margin-top:16px;"><i class="fas fa-arrow-left"></i> Back to Upload</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let resultsData = null;
+        let activeCandidateId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Try to get result_id from URL or use latest
+            const urlParams = new URLSearchParams(window.location.search);
+            const resultId = urlParams.get('id');
+
+            if (resultId) {
+                loadResult(resultId);
+            } else {
+                loadLatestResult();
+            }
+        });
+
+        async function loadResult(resultId) {
+            try {
+                const response = await fetch(`/api/results/${resultId}`);
+                if (response.ok) {
+                    resultsData = await response.json();
+                    renderResults();
+                } else {
+                    showError("Result not found");
+                }
+            } catch (e) {
+                showError("Failed to load results");
+            }
+        }
+
+        async function loadLatestResult() {
+            try {
+                const response = await fetch('/api/results');
+                const results = await response.json();
+                if (results.length > 0) {
+                    loadResult(results[0].result_id);
+                } else {
+                    showEmptyState();
+                }
+            } catch (e) {
+                showEmptyState();
+            }
+        }
+
+        function showError(msg) {
+            document.getElementById('resultsContent').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>${msg}</h3>
+                    <a href="/" class="btn btn-light" style="margin-top:16px;"><i class="fas fa-arrow-left"></i> Back to Upload</a>
+                </div>
+            `;
+        }
+
+        function showEmptyState() {
+            document.getElementById('resultsContent').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <h3>No results found</h3>
+                    <p>Upload resumes to see analysis results.</p>
+                    <a href="/" class="btn btn-light" style="margin-top:16px;"><i class="fas fa-arrow-left"></i> Back to Upload</a>
+                </div>
+            `;
+        }
+
+        function renderResults() {
+            if (!resultsData || !resultsData.candidates || resultsData.candidates.length === 0) return;
+
+            const container = document.getElementById('resultsContent');
+            const candidates = resultsData.candidates;
+
+            // Sort by score descending
+            candidates.sort((a, b) => b.match_result.total_score - a.match_result.total_score);
+
+            // Update summary
+            const bestScore = Math.max(...candidates.map(c => c.match_result.total_score));
+            const avgScore = (candidates.reduce((sum, c) => sum + c.match_result.total_score, 0) / candidates.length).toFixed(1);
+            document.getElementById('resultsSummary').textContent = 
+                `${candidates.length} candidate(s) analyzed - Best score: ${bestScore.toFixed(1)}% - Average: ${avgScore}%`;
+
+            let html = '';
+
+            // Ranking Chart (if multiple candidates)
+            if (candidates.length > 1 && resultsData.ranking_chart) {
+                html += `
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-trophy"></i> Candidate Ranking</div>
+                        <div class="chart-container">
+                            <img src="data:image/png;base64,${resultsData.ranking_chart}" alt="Ranking Chart">
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Ranking Table
+            html += `
+                <div class="card">
+                    <div class="card-title"><i class="fas fa-list-ol"></i> Ranked Candidates</div>
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Candidate</th>
+                                <th>Match Score</th>
+                                <th>Skills</th>
+                                <th>Experience</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            candidates.forEach((c, idx) => {
+                const rank = idx + 1;
+                const score = c.match_result.total_score;
+                const scoreClass = score >= 70 ? 'excellent' : score >= 50 ? 'good' : 'average';
+                const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
+                const expYears = c.experience.total_years || 0;
+
+                html += `
+                    <tr>
+                        <td><span class="rank-badge ${rankClass}">${rank}</span></td>
+                        <td>
+                            <div class="candidate-name">${c.file_name}</div>
+                            <div class="candidate-meta">${c.word_count} words - Quality: ${c.quality_analysis.overall_score}/100</div>
+                        </td>
+                        <td><span class="score-badge score-${scoreClass}">${score.toFixed(1)}%</span></td>
+                        <td>${c.skills.skill_count} skills</td>
+                        <td>${expYears > 0 ? expYears + ' years' : 'N/A'}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn action-btn-view" onclick="toggleDetail('${c.id}')">
+                                    <i class="fas fa-eye"></i> Details
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="padding:0; border:none;">
+                            <div class="detail-panel" id="detail-${c.id}">
+                                ${renderCandidateDetail(c)}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+
+        function renderCandidateDetail(candidate) {
+            const m = candidate.match_result;
+            const q = candidate.quality_analysis;
+            const s = candidate.skills;
+
+            let html = `
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('${candidate.id}', 'overview')">Overview</button>
+                    <button class="tab" onclick="switchTab('${candidate.id}', 'skills')">Skills</button>
+                    <button class="tab" onclick="switchTab('${candidate.id}', 'quality')">Quality</button>
+                    <button class="tab" onclick="switchTab('${candidate.id}', 'visuals')">Visuals</button>
+                </div>
+
+                <div class="tab-content active" id="tab-${candidate.id}-overview">
+                    <div class="two-col">
+                        <div>
+                            <h4 style="margin-bottom:12px;">Match Score Breakdown</h4>
+                            ${Object.entries(m.breakdown).map(([key, val]) => `
+                                <div class="metric-row">
+                                    <span class="metric-label">${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                                    <span class="metric-value">${val.toFixed(1)}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-${val >= 70 ? 'excellent' : val >= 50 ? 'good' : 'average'}" style="width:${val}%"></div>
+                                </div>
+                            `).join('')}
+
+                            <div style="margin-top:20px; padding:16px; background: white; border-radius:8px;">
+                                <div style="font-weight:700; margin-bottom:8px;">Recommendation</div>
+                                <div style="color:var(--gray); font-size:0.9rem;">${m.recommendation}</div>
+                            </div>
+
+                            ${m.strengths.length > 0 ? `
+                                <div style="margin-top:16px;">
+                                    <div style="font-weight:700; margin-bottom:8px;">Strengths</div>
+                                    ${m.strengths.map(s => `<div style="color:var(--success); font-size:0.9rem; margin-bottom:4px;"><i class="fas fa-check-circle"></i> ${s}</div>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div>
+                            <h4 style="margin-bottom:12px;">Candidate Info</h4>
+                            <div style="background:white; padding:16px; border-radius:8px;">
+                                <div class="metric-row">
+                                    <span class="metric-label">File</span>
+                                    <span class="metric-value">${candidate.file_name}</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Word Count</span>
+                                    <span class="metric-value">${candidate.word_count}</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Experience</span>
+                                    <span class="metric-value">${candidate.experience.total_years > 0 ? candidate.experience.total_years + ' years' : 'Not specified'}</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Education</span>
+                                    <span class="metric-value">${candidate.education.highest_degree.replace(/\b\w/g, l => l.toUpperCase())}</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-label">Skills Count</span>
+                                    <span class="metric-value">${s.skill_count}</span>
+                                </div>
+                            </div>
+
+                            ${m.skill_gaps.length > 0 ? `
+                                <div style="margin-top:16px;">
+                                    <div style="font-weight:700; margin-bottom:8px; color:var(--danger);">Skill Gaps</div>
+                                    <div style="background:white; padding:16px; border-radius:8px;">
+                                        ${m.skill_gaps.slice(0, 5).map(g => `
+                                            <div style="margin-bottom:8px;">
+                                                <span style="font-weight:600;">${g.skill}</span>
+                                                <span style="font-size:0.8rem; color:var(--gray); margin-left:8px;">(${g.importance})</span>
+                                                <div style="font-size:0.85rem; color:var(--gray); margin-top:2px;">${g.suggestion}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : `
+                                <div style="margin-top:16px; padding:16px; background:#d1fae5; border-radius:8px; color:#065f46;">
+                                    <i class="fas fa-check-circle"></i> No skill gaps detected! Perfect match.
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-${candidate.id}-skills">
+                    <div class="two-col">
+                        <div>
+                            <h4 style="margin-bottom:12px;">Technical Skills</h4>
+                            <div class="skill-tags">
+                                ${s.skills_by_category.technical.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                                ${s.skills_by_category.programming.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                                ${s.skills_by_category.frameworks.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                                ${s.skills_by_category.databases.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                                ${s.skills_by_category.cloud_devops.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                            </div>
+
+                            <h4 style="margin:20px 0 12px;">Soft Skills</h4>
+                            <div class="skill-tags">
+                                ${s.skills_by_category.soft.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                            </div>
+
+                            <h4 style="margin:20px 0 12px;">Other Skills</h4>
+                            <div class="skill-tags">
+                                ${s.skills_by_category.other.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom:12px;">Top Skills by Frequency</h4>
+                            ${s.top_skills.map(([skill, freq]) => `
+                                <div class="metric-row">
+                                    <span class="metric-label">${skill}</span>
+                                    <span class="metric-value">${freq} mentions</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-excellent" style="width:${Math.min(freq * 20, 100)}%"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-${candidate.id}-quality">
+                    <div class="two-col">
+                        <div>
+                            <h4 style="margin-bottom:12px;">Quality Scores</h4>
+                            ${Object.entries(q).filter(([k]) => ['ats_score', 'formatting_score', 'content_score', 'keyword_score', 'readability_score'].includes(k)).map(([key, val]) => `
+                                <div class="metric-row">
+                                    <span class="metric-label">${key.replace('_score', '').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                                    <span class="metric-value">${val}/100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-${val >= 70 ? 'excellent' : val >= 50 ? 'good' : 'average'}" style="width:${val}%"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom:12px;">Resume Metrics</h4>
+                            <div style="background:white; padding:16px; border-radius:8px;">
+                                ${Object.entries(q.metrics).map(([key, val]) => `
+                                    <div class="metric-row">
+                                        <span class="metric-label">${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                                        <span class="metric-value">${val}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <h4 style="margin:20px 0 12px;">Improvement Suggestions</h4>
+                            ${q.suggestions.map(sugg => `
+                                <div class="suggestion-item">
+                                    <div class="suggestion-icon priority-${sugg.priority}">
+                                        <i class="fas fa-${sugg.priority === 'high' ? 'exclamation' : sugg.priority === 'medium' ? 'info' : 'check'}"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight:600; font-size:0.9rem;">[${sugg.category}] ${sugg.message}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-${candidate.id}-visuals">
+                    <div class="two-col">
+                        <div class="chart-container">
+                            <h4 style="margin-bottom:12px;">Match Score Radar</h4>
+                            <img src="data:image/png;base64,${candidate.visualizations.radar_chart}" alt="Radar Chart">
+                        </div>
+                        <div class="chart-container">
+                            <h4 style="margin-bottom:12px;">Resume Word Cloud</h4>
+                            <img src="data:image/png;base64,${candidate.visualizations.wordcloud}" alt="Word Cloud">
+                        </div>
+                    </div>
+                    <div class="chart-container" style="margin-top:16px;">
+                        <h4 style="margin-bottom:12px;">Quality Gauge</h4>
+                        <img src="data:image/png;base64,${candidate.visualizations.quality_gauge}" alt="Quality Gauge" style="max-width:400px;">
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+
+        function toggleDetail(candidateId) {
+            const panel = document.getElementById(`detail-${candidateId}`);
+            panel.classList.toggle('active');
+
+            // Close other panels
+            document.querySelectorAll('.detail-panel').forEach(p => {
+                if (p.id !== `detail-${candidateId}`) p.classList.remove('active');
+            });
+        }
+
+        function switchTab(candidateId, tabName) {
+            // Update tab buttons
+            const panel = document.getElementById(`detail-${candidateId}`);
+            panel.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update content
+            panel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(`tab-${candidateId}-${tabName}`).classList.add('active');
+        }
+
+        async function exportResults() {
+            if (!resultsData || !resultsData.result_id) return;
+            window.location.href = `/api/export/${resultsData.result_id}`;
+        }
+    </script>
+</body>
+</html>
