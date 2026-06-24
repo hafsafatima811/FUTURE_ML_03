@@ -1,0 +1,40 @@
+JOHN SMITH
+john.smith@email.com | (555) 123-4567 | San Francisco, CA
+LinkedIn: linkedin.com/in/johnsmith
+
+SUMMARY
+Results-driven Data Scientist with 4 years of experience in machine learning, 
+deep learning, and statistical analysis. Proven track record of building predictive 
+models that increased revenue by 25%. Expert in Python, TensorFlow, PyTorch, and 
+data visualization.
+
+SKILLS
+• Programming: Python, R, SQL, MATLAB
+• Machine Learning: Regression, Classification, Clustering, NLP, Computer Vision
+• Deep Learning: TensorFlow, PyTorch, Keras, CNN, RNN, Transformers
+• Data Tools: Pandas, NumPy, Scikit-learn, Jupyter, Matplotlib, Seaborn
+• Cloud: AWS, Docker, Kubernetes
+• Soft Skills: Communication, Leadership, Problem Solving, Teamwork
+
+EXPERIENCE
+Senior Data Scientist | TechCorp Inc. | 2022 - Present
+• Built and deployed machine learning models for customer churn prediction
+• Implemented NLP pipelines for sentiment analysis achieving 92% accuracy
+• Led a team of 3 data scientists on recommendation engine project
+• Used TensorFlow and PyTorch for deep learning model development
+• Created interactive dashboards using Plotly and Streamlit
+
+Data Scientist | DataWorks LLC | 2020 - 2022
+• Developed predictive models for sales forecasting with 95% accuracy
+• Performed statistical analysis and A/B testing for product optimization
+• Built ETL pipelines using Python and SQL
+• Collaborated with cross-functional teams to deliver data-driven insights
+
+EDUCATION
+Master of Science in Computer Science | Stanford University | 2020
+Bachelor of Science in Statistics | UC Berkeley | 2018
+
+PROJECTS
+• Built a real-time recommendation system using collaborative filtering
+• Developed a computer vision model for object detection using YOLO
+• Created an NLP chatbot using Transformer models and BERT
