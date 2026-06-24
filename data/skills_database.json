@@ -1,0 +1,57 @@
+{
+  "technical_skills": {
+    "programming": [
+      "Python", "R", "Java", "C++", "C", "JavaScript", "TypeScript", "Go", "Rust", "Scala",
+      "Ruby", "PHP", "Swift", "Kotlin", "MATLAB", "SAS", "Julia", "Perl", "Shell", "Bash"
+    ],
+    "machine_learning": [
+      "Machine Learning", "Deep Learning", "Supervised Learning", "Unsupervised Learning",
+      "Reinforcement Learning", "Transfer Learning", "Neural Networks", "CNN", "RNN", "LSTM",
+      "GANs", "Transformers", "BERT", "GPT", "AutoML", "Feature Engineering", "Hyperparameter Tuning",
+      "Cross-Validation", "Ensemble Methods", "Random Forest", "XGBoost", "LightGBM", "SVM",
+      "K-Means", "PCA", "Clustering", "Classification", "Regression"
+    ],
+    "frameworks": [
+      "TensorFlow", "PyTorch", "Keras", "Scikit-learn", "XGBoost", "LightGBM", "CatBoost",
+      "FastAI", "JAX", "OpenCV", "spaCy", "NLTK", "Hugging Face", "LangChain", "LlamaIndex"
+    ],
+    "data_processing": [
+      "Pandas", "NumPy", "Dask", "Spark", "Hadoop", "Kafka", "Airflow", "dbt", "Polars",
+      "Data Cleaning", "ETL", "Data Pipeline", "Data Wrangling", "Feature Selection"
+    ],
+    "databases": [
+      "SQL", "MySQL", "PostgreSQL", "MongoDB", "Redis", "Elasticsearch", "Cassandra",
+      "DynamoDB", "Snowflake", "BigQuery", "SQLite", "Oracle", "NoSQL"
+    ],
+    "cloud_devops": [
+      "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "CI/CD", "Jenkins",
+      "GitHub Actions", "GitLab CI", "MLflow", "Kubeflow", "AWS SageMaker", "Azure ML"
+    ],
+    "visualization": [
+      "Matplotlib", "Seaborn", "Plotly", "Tableau", "Power BI", "D3.js", "ggplot2",
+      "Data Visualization", "Dashboard", "Reporting"
+    ],
+    "nlp": [
+      "NLP", "Natural Language Processing", "Text Mining", "Sentiment Analysis",
+      "Named Entity Recognition", "Text Classification", "Topic Modeling", "Word Embeddings",
+      "Tokenization", "Stemming", "Lemmatization", "TF-IDF", "Word2Vec", "GloVe"
+    ],
+    "computer_vision": [
+      "Computer Vision", "Image Processing", "Object Detection", "Image Segmentation",
+      "Facial Recognition", "OCR", "YOLO", "RCNN", "OpenCV", "PIL"
+    ],
+    "web_frameworks": [
+      "Flask", "Django", "FastAPI", "Spring Boot", "React", "Vue.js", "Angular",
+      "Node.js", "Express", "REST API", "GraphQL", "WebSocket"
+    ]
+  },
+  "soft_skills": [
+    "Communication", "Leadership", "Teamwork", "Problem Solving", "Critical Thinking",
+    "Time Management", "Project Management", "Adaptability", "Creativity", "Collaboration",
+    "Presentation", "Stakeholder Management", "Agile", "Scrum", "Kanban"
+  ],
+  "education_keywords": [
+    "Bachelor", "Master", "PhD", "B.Tech", "M.Tech", "B.E.", "M.E.", "B.Sc", "M.Sc",
+    "Computer Science", "Statistics", "Mathematics", "Engineering", "Data Science"
+  ]
+}
